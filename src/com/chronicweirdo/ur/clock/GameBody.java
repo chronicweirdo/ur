@@ -4,13 +4,16 @@ import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.World;
 
-public class GameBody extends Body {
+public abstract class GameBody {
+	
+	protected BodyDef definition;
+	protected World world;
+	protected Body body;
 
-	private GameBody(BodyDef bd, World world) {
-		super(bd, world);
+	protected GameBody(World world, BodyDef definition) {
+		this.definition = definition;
+		this.world = world;
 	}
 
-	public void render() {
-		// draw the body
-	}
+	public abstract void render();
 }
