@@ -6,8 +6,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.Body;
-import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.World;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
@@ -15,7 +13,7 @@ import org.lwjgl.opengl.DisplayMode;
 
 public class Main {
 	
-	private static final String WINDOW_TITLE = "Physics in 2D!";
+	private static final String WINDOW_TITLE = "Clock Glock";
 	private static final int[] WINDOW_DIMENSIONS = { 640, 480 };
 
 	private World world;
@@ -23,7 +21,7 @@ public class Main {
 	private Set<InputHandler> handlers;
 	
 	private Main() {
-		this.world = new World(new Vec2(0, -9.8f), false);
+		this.world = new World(new Vec2(0, Constants.G), false);
 		this.bodies = new HashSet<GameBody>();
 		this.handlers = new HashSet<InputHandler>();
 		
@@ -59,11 +57,12 @@ public class Main {
 		// set up walls
 		this.addBody(new Wall(this.world, 0f, 0f, 1000f, 0f)); // ground
 		this.addBody(new Wall(this.world, 0f, 0f, 0f, 1000f)); // left wall
-		this.addBody(new Wall(this.world, 320f / 30, 0f, 0f, 1000f)); // right wall
-		this.addBody(new Wall(this.world, 0, 240f / 30, 1000f, 0f)); // ceiling
+		this.addBody(new Wall(this.world, 320f / Constants.D, 0f, 0f, 1000f)); // right wall
+		this.addBody(new Wall(this.world, 0, 240f / Constants.D, 1000f, 0f)); // ceiling
 		
 		// add a box
-		this.addBody(new Box(this.world, 50f, 50f, 20f, 20f));
+		this.addBody(new ControllableBox(this.world, 3f, 3f, 1f, 2f));
+		this.addBody(new Box(this.world, 6f, 3f, 1f, 2f));
 	}
 	
 	private static void cleanUp(boolean asCrash) {
@@ -72,8 +71,10 @@ public class Main {
 	}
 	
 	private void addBody(GameBody body) {
+		System.out.println("adding body");
 		this.bodies.add(body);
 		if (body instanceof InputHandler) {
+			System.out.println("adding input handler");
 			this.handlers.add((InputHandler) body);
 		}
 	}
@@ -110,7 +111,7 @@ public class Main {
 	}
 
 	private void logic() {
-		this.world.step(1 / 60f, 8, 3);
+		this.world.step(1 / 30f, 8, 3);
 	}
 	
 	

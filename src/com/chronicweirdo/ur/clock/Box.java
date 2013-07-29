@@ -13,14 +13,14 @@ import org.lwjgl.input.Mouse;
 
 public class Box extends DynamicBody {
 
-	private PolygonShape shape;
-	private FixtureDef fixture;
+	protected PolygonShape shape;
+	protected FixtureDef fixture;
 
 	public Box(World world, float x, float y, float width, float height) {
 		super(world, x, y);
 
-		PolygonShape boxShape = new PolygonShape();
-		boxShape.setAsBox(width, height);
+		this.shape = new PolygonShape();
+		this.shape.setAsBox(width, height);
 
 		this.body = world.createBody(this.definition);
 
@@ -34,7 +34,7 @@ public class Box extends DynamicBody {
 	public void render() {
 		glPushMatrix();
 
-		Vec2 bodyPosition = this.body.getPosition();
+		Vec2 bodyPosition = this.body.getPosition().mul(Constants.D);
 		glTranslatef(bodyPosition.x, bodyPosition.y, 0);
 		glRotated(Math.toDegrees(this.body.getAngle()), 0, 0, 1);
 		
@@ -42,7 +42,7 @@ public class Box extends DynamicBody {
 		glColor3f(1, 1, 1);
 		glBegin(GL_QUADS);
 		for (Vec2 v : vertices) {
-			glVertex2f(v.x, v.y);
+			glVertex2f(v.x * Constants.D, v.y * Constants.D);
 		}
 		glEnd();
 		glPopMatrix();
