@@ -10,8 +10,8 @@ public class Wall extends RigidBody {
 	private PolygonShape shape;
 	private FixtureDef fixture;
 	
-	public Wall(World world, float x, float y, float width, float height) {
-		super(world, x, y);
+	public Wall(float x, float y, float width, float height) {
+		super(x, y);
 		
 		this.shape = new PolygonShape();
 		this.shape.setAsBox(width, height);

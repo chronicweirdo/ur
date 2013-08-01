@@ -13,7 +13,7 @@ public abstract class DynamicBody extends GameBody {
 		return definition;
 	}
 	
-	protected DynamicBody(World world, float x, float y) {
-		super(world, definition(x, y));
+	protected DynamicBody(float x, float y) {
+		super(definition(x, y));
 	}
 }

@@ -16,13 +16,12 @@ public class Main {
 	private static final String WINDOW_TITLE = "Clock Glock";
 	private static final int[] WINDOW_DIMENSIONS = { 640, 480 };
 
-	private World world;
-	private Set<GameBody> bodies;
+	private Set<GameComponent> components;
 	private Set<InputHandler> handlers;
 	
 	private Main() {
-		this.world = new World(new Vec2(0, Constants.G), false);
-		this.bodies = new HashSet<GameBody>();
+		Globals.WORLD = new World(new Vec2(0, Globals.G), false);
+		this.components = new HashSet<GameComponent>();
 		this.handlers = new HashSet<InputHandler>();
 		
 		this.setUp();
@@ -55,14 +54,16 @@ public class Main {
 	
 	private void setUpObjects() {
 		// set up walls
-		this.addBody(new Wall(this.world, 0f, 0f, 1000f, 0f)); // ground
-		this.addBody(new Wall(this.world, 0f, 0f, 0f, 1000f)); // left wall
-		this.addBody(new Wall(this.world, 320f / Constants.D, 0f, 0f, 1000f)); // right wall
-		this.addBody(new Wall(this.world, 0, 240f / Constants.D, 1000f, 0f)); // ceiling
+		this.addBody(new Wall(0f, 0f, 1000f, 0f)); // ground
+		this.addBody(new Wall(0f, 0f, 0f, 1000f)); // left wall
+		this.addBody(new Wall(320f / Globals.D, 0f, 0f, 1000f)); // right wall
+		this.addBody(new Wall(0, 240f / Globals.D, 1000f, 0f)); // ceiling
 		
 		// add a box
-		this.addBody(new ControllableBox(this.world, 3f, 3f, 1f, 2f));
-		this.addBody(new Box(this.world, 6f, 3f, 1f, 2f));
+		//this.addBody(new ControllableBox(this.world, 3f, 3f, 0.2f, 2f));
+		//this.addBody(new Box(this.world, 6f, 3f, 1f, 2f));
+		//this.addBody(new Ball(this.world, 5f, 15f, 1f));
+		this.addBody(new Cannon(WINDOW_DIMENSIONS[0]/4/Globals.D, WINDOW_DIMENSIONS[1]/4/Globals.D));
 	}
 	
 	private static void cleanUp(boolean asCrash) {
@@ -70,9 +71,8 @@ public class Main {
 		System.exit(asCrash ? 1 : 0);
 	}
 	
-	private void addBody(GameBody body) {
-		System.out.println("adding body");
-		this.bodies.add(body);
+	private void addBody(GameComponent body) {
+		this.components.add(body);
 		if (body instanceof InputHandler) {
 			System.out.println("adding input handler");
 			this.handlers.add((InputHandler) body);
@@ -100,8 +100,8 @@ public class Main {
 
 	private void render() {
 		glClear(GL_COLOR_BUFFER_BIT);
-		for (GameBody body : this.bodies) {
-			body.render();
+		for (GameComponent component : this.components) {
+			component.render();
 		}
 		renderHUD();
 	}
@@ -111,7 +111,7 @@ public class Main {
 	}
 
 	private void logic() {
-		this.world.step(1 / 30f, 8, 3);
+		Globals.WORLD.step(1 / 30f, 8, 3);
 	}
 	
 	

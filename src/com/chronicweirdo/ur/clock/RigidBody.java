@@ -13,8 +13,8 @@ public abstract class RigidBody extends GameBody {
 		return definition;
 	}
 	
-	protected RigidBody(World world, float x, float y) {
-		super(world, definition(x, y));
+	protected RigidBody(float x, float y) {
+		super(definition(x, y));
 	}
 
 }

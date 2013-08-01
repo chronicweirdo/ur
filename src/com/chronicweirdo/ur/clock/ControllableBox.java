@@ -27,8 +27,8 @@ public class ControllableBox extends Box implements InputHandler {
 			//System.out.println("space");
 			//System.out.println(this.body.getWorldCenter());
 			System.out.println(this.body.getAngle());
-			this.body.setAngularDamping(1000);
-			if (Math.abs(this.body.getAngle()) > 0.1) this.body.applyAngularImpulse(10);
+			this.body.setAngularDamping(Float.MAX_VALUE);
+			//if (Math.abs(this.body.getAngle()) > 0.1) this.body.applyAngularImpulse(10);
 			this.body.applyLinearImpulse(new Vec2(0, .5f), this.body.getWorldCenter());
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_A)) {

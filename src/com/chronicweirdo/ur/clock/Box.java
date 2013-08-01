@@ -17,7 +17,7 @@ public class Box extends DynamicBody {
 	protected FixtureDef fixture;
 
 	public Box(World world, float x, float y, float width, float height) {
-		super(world, x, y);
+		super(x, y);
 
 		this.shape = new PolygonShape();
 		this.shape.setAsBox(width, height);
@@ -26,6 +26,7 @@ public class Box extends DynamicBody {
 
 		this.fixture = new FixtureDef();
 		this.fixture.density = 0.1f;
+		
 		this.fixture.shape = this.shape;
 		this.body.createFixture(this.fixture);
 	}
@@ -34,7 +35,7 @@ public class Box extends DynamicBody {
 	public void render() {
 		glPushMatrix();
 
-		Vec2 bodyPosition = this.body.getPosition().mul(Constants.D);
+		Vec2 bodyPosition = this.body.getPosition().mul(Globals.D);
 		glTranslatef(bodyPosition.x, bodyPosition.y, 0);
 		glRotated(Math.toDegrees(this.body.getAngle()), 0, 0, 1);
 		
@@ -42,7 +43,7 @@ public class Box extends DynamicBody {
 		glColor3f(1, 1, 1);
 		glBegin(GL_QUADS);
 		for (Vec2 v : vertices) {
-			glVertex2f(v.x * Constants.D, v.y * Constants.D);
+			glVertex2f(v.x * Globals.D, v.y * Globals.D);
 		}
 		glEnd();
 		glPopMatrix();
