@@ -29,8 +29,6 @@ public class Ball extends DynamicBody {
 		this.fixture.restitution = .95f;
 		this.fixture.shape = this.shape;
 		this.body.createFixture(this.fixture);
-
-		this.body.applyForce(new Vec2(1000, 1000), this.body.getWorldCenter());
 	}
 
 	@Override

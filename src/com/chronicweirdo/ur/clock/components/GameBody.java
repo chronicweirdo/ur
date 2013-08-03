@@ -24,4 +24,8 @@ public abstract class GameBody implements Component {
 	protected abstract void init();
 	
 	public abstract void render();
+	
+	public Body getBody() {
+		return this.body;
+	}
 }

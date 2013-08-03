@@ -87,7 +87,7 @@ public class Main {
 		System.exit(asCrash ? 1 : 0);
 	}
 
-	private void addBody(Component body) {
+	public void addBody(Component body) {
 		this.components.add(body);
 		if (body instanceof InputHandler) {
 			System.out.println("adding input handler");
