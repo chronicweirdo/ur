@@ -8,10 +8,9 @@ import org.lwjgl.input.Mouse;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.chronicweirdo.ur.clock.Globals;
-import com.chronicweirdo.ur.clock.InputHandler;
 import com.chronicweirdo.ur.clock.Main;
 
-public class Cannon implements Component, InputHandler {
+public class Cannon implements GameComponent, InputHandler {
 
 	@Autowired
 	private Globals globals;
@@ -104,7 +103,6 @@ public class Cannon implements Component, InputHandler {
 		Vec2 nv = getNormalizedDirectionVector();
 		nv = nv.mul(speed);
 		ball.getBody().applyForce(nv, ball.getBody().getWorldCenter());
-		main.addBody(ball);
 		lastShoot = System.currentTimeMillis();
 	}
 

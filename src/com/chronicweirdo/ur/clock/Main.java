@@ -16,8 +16,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
 
 import com.chronicweirdo.ur.clock.components.Ball;
-import com.chronicweirdo.ur.clock.components.Component;
+import com.chronicweirdo.ur.clock.components.GameComponent;
 import com.chronicweirdo.ur.clock.components.ComponentFactory;
+import com.chronicweirdo.ur.clock.components.InputHandler;
 
 @Service
 public class Main {
@@ -31,12 +32,7 @@ public class Main {
 	private static final String WINDOW_TITLE = "Clock Glock";
 	private static final int[] WINDOW_DIMENSIONS = { 640, 480 };
 
-	private Set<Component> components;
-	private Set<InputHandler> handlers;
-
 	private Main() {
-		this.components = new HashSet<Component>();
-		this.handlers = new HashSet<InputHandler>();
 	}
 
 	@PostConstruct
@@ -67,32 +63,23 @@ public class Main {
 
 	private void setUpObjects() {
 		// set up walls
-		this.addBody(factory.wall(0f, 0f, 1000f, 0f)); // ground
-		this.addBody(factory.wall(0f, 0f, 0f, 1000f)); // left wall
-		this.addBody(factory.wall(320f / globals.d(), 0f, 0f, 1000f)); // right
-																		// wall
-		this.addBody(factory.wall(0, 240f / globals.d(), 1000f, 0f)); // ceiling
+		factory.wall(0f, 0f, 1000f, 0f); // ground
+		factory.wall(0f, 0f, 0f, 1000f); // left wall
+		factory.wall(320f / globals.d(), 0f, 0f, 1000f); // right wall
+		factory.wall(0, 240f / globals.d(), 1000f, 0f); // ceiling
 
 		// add a box
 		// this.addBody(new ControllableBox(this.world, 3f, 3f, 0.2f, 2f));
 		// this.addBody(new Box(this.world, 6f, 3f, 1f, 2f));
-		this.addBody(factory.ball(5f, 15f, 1f));
-		this.addBody(factory.ball(8f, 15f, 1f));
-		this.addBody(factory.cannon(WINDOW_DIMENSIONS[0] / 4 / globals.d(),
-				WINDOW_DIMENSIONS[1] / 4 / globals.d()));
+		//this.addBody(factory.ball(5f, 15f, 1f));
+		//this.addBody(factory.ball(8f, 15f, 1f));
+		factory.cannon(WINDOW_DIMENSIONS[0] / 4 / globals.d(),
+				WINDOW_DIMENSIONS[1] / 4 / globals.d());
 	}
 
-	private static void cleanUp(boolean asCrash) {
+	private void cleanUp(boolean asCrash) {
 		Display.destroy();
 		System.exit(asCrash ? 1 : 0);
-	}
-
-	public void addBody(Component body) {
-		this.components.add(body);
-		if (body instanceof InputHandler) {
-			System.out.println("adding input handler");
-			this.handlers.add((InputHandler) body);
-		}
 	}
 
 	private void startGame() {
@@ -105,7 +92,7 @@ public class Main {
 	}
 
 	private void input() {
-		for (InputHandler handler : this.handlers) {
+		for (InputHandler handler : this.factory.handlers()) {
 			handler.input();
 		}
 	}
@@ -116,7 +103,7 @@ public class Main {
 
 	private void render() {
 		glClear(GL_COLOR_BUFFER_BIT);
-		for (Component component : this.components) {
+		for (GameComponent component : this.factory.components()) {
 			component.render();
 		}
 		renderHUD();

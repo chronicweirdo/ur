@@ -1,4 +1,4 @@
-package com.chronicweirdo.ur.clock;
+package com.chronicweirdo.ur.clock.components;
 
 public interface InputHandler {
 

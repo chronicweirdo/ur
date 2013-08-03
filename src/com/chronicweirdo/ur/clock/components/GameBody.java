@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.chronicweirdo.ur.clock.Globals;
 
-public abstract class GameBody implements Component {
+public abstract class GameBody implements GameComponent {
 	
 	@Autowired
 	protected Globals globals;

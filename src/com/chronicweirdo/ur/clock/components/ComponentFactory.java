@@ -1,5 +1,7 @@
 package com.chronicweirdo.ur.clock.components;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.beans.BeansException;
@@ -17,6 +19,29 @@ public class ComponentFactory implements ApplicationContextAware {
 	private Globals globals;
 	
 	private ApplicationContext context;
+	
+	private Set<GameComponent> components;
+	private Set<InputHandler> handlers;
+	
+	private ComponentFactory() {
+		this.components = new HashSet<GameComponent>();
+		this.handlers = new HashSet<InputHandler>();
+	}
+
+	public Set<GameComponent> components() {
+		return this.components;
+	}
+	
+	public Set<InputHandler> handlers() {
+		return this.handlers;
+	}
+	
+	private void add(GameComponent component) {
+		this.components.add(component);
+		if (component instanceof InputHandler) {
+			this.handlers.add((InputHandler) component);
+		}
+	}
 
 	@Override
 	public void setApplicationContext(ApplicationContext context)
@@ -40,9 +65,10 @@ public class ComponentFactory implements ApplicationContextAware {
 		return (ControllableBox) autowire(new ControllableBox(x, y, width, height));
 	}
 	
-	private Object autowire(Object bean) {
+	private Object autowire(GameComponent bean) {
 		this.context.getAutowireCapableBeanFactory().autowireBean(bean);
 		this.context.getAutowireCapableBeanFactory().initializeBean(bean, UUID.randomUUID().toString());
+		add(bean);
 		return bean;
 	}
 	
