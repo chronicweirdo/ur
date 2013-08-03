@@ -2,25 +2,26 @@ package com.chronicweirdo.ur.clock;
 
 import static org.lwjgl.opengl.GL11.*;
 
+import javax.annotation.PostConstruct;
+
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.Body;
-import org.jbox2d.dynamics.BodyDef;
-import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
-import org.jbox2d.dynamics.World;
-import org.lwjgl.input.Mouse;
 
 public class Box extends DynamicBody {
 
 	protected PolygonShape shape;
 	protected FixtureDef fixture;
 
-	public Box(World world, float x, float y, float width, float height) {
+	public Box(float x, float y, float width, float height) {
 		super(x, y);
 
 		this.shape = new PolygonShape();
 		this.shape.setAsBox(width, height);
+	}
+	
+	@PostConstruct
+	protected void init() {
 
 		this.body = world.createBody(this.definition);
 
@@ -35,7 +36,7 @@ public class Box extends DynamicBody {
 	public void render() {
 		glPushMatrix();
 
-		Vec2 bodyPosition = this.body.getPosition().mul(Globals.D);
+		Vec2 bodyPosition = this.body.getPosition().mul(globals.d());
 		glTranslatef(bodyPosition.x, bodyPosition.y, 0);
 		glRotated(Math.toDegrees(this.body.getAngle()), 0, 0, 1);
 		
@@ -43,7 +44,7 @@ public class Box extends DynamicBody {
 		glColor3f(1, 1, 1);
 		glBegin(GL_QUADS);
 		for (Vec2 v : vertices) {
-			glVertex2f(v.x * Globals.D, v.y * Globals.D);
+			glVertex2f(v.x * globals.d(), v.y * globals.d());
 		}
 		glEnd();
 		glPopMatrix();

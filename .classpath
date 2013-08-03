@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="conf"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/jbox2d-library-2.1.2.2.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-api-1.6.6.jar"/>
@@ -12,5 +13,11 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="ur/lib/native/windows"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/spring/spring-beans-4.0.0.M2.jar"/>
+	<classpathentry kind="lib" path="lib/spring/spring-context-4.0.0.M2.jar"/>
+	<classpathentry kind="lib" path="lib/spring/spring-core-4.0.0.M2.jar"/>
+	<classpathentry kind="lib" path="lib/spring/spring-expression-4.0.0.M2.jar"/>
+	<classpathentry kind="lib" path="lib/spring/spring-context-support-4.0.0.M2.jar"/>
+	<classpathentry kind="lib" path="lib/spring/commons-logging-1.1.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

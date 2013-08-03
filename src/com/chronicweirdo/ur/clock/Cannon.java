@@ -4,9 +4,12 @@ import static org.lwjgl.opengl.GL11.*;
 
 import org.jbox2d.common.Vec2;
 import org.lwjgl.input.Mouse;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class Cannon implements GameComponent, InputHandler {
 
+	@Autowired
+	private Globals globals;
 	private float x;
 	private float y;
 	private float projectileSpeed = 1;
@@ -20,7 +23,7 @@ public class Cannon implements GameComponent, InputHandler {
 	public void render() {
 		glPushMatrix();
 		glColor3f(1, 0, 0);
-		Vec2 position = new Vec2(this.x, this.y).mul(Globals.D);
+		Vec2 position = new Vec2(this.x, this.y).mul(globals.d());
 		glTranslatef(position.x, position.y, 0);
 
 		// get direction vector

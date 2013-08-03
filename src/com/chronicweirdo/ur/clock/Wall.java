@@ -1,9 +1,9 @@
 package com.chronicweirdo.ur.clock;
 
+import javax.annotation.PostConstruct;
+
 import org.jbox2d.collision.shapes.PolygonShape;
-import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.FixtureDef;
-import org.jbox2d.dynamics.World;
 
 public class Wall extends RigidBody {
 
@@ -16,6 +16,10 @@ public class Wall extends RigidBody {
 		this.shape = new PolygonShape();
 		this.shape.setAsBox(width, height);
 
+	}
+
+	@PostConstruct
+	protected void init() {
 		this.body = this.world.createBody(definition);
 
 		this.fixture = new FixtureDef();

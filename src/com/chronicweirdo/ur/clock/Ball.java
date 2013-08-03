@@ -2,23 +2,26 @@ package com.chronicweirdo.ur.clock;
 
 import static org.lwjgl.opengl.GL11.*;
 
+import javax.annotation.PostConstruct;
+
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.FixtureDef;
-import org.jbox2d.dynamics.World;
 
 public class Ball extends DynamicBody {
-	
 	
 	protected CircleShape shape;
 	protected FixtureDef fixture;
 
-	protected Ball(World world, float x, float y, float radius) {
+	protected Ball(float x, float y, float radius) {
 		super(x, y);
-
+		
 		this.shape = new CircleShape();
 		this.shape.m_radius = radius;
-
+	}
+	
+	@PostConstruct
+	protected void init() {
 		this.body = world.createBody(this.definition);
 
 		this.fixture = new FixtureDef();
@@ -34,7 +37,7 @@ public class Ball extends DynamicBody {
 	public void render() {
 		glPushMatrix();
 
-		Vec2 bodyPosition = this.body.getPosition().mul(Globals.D);
+		Vec2 bodyPosition = this.body.getPosition().mul(globals.d());
 		glTranslatef(bodyPosition.x, bodyPosition.y, 0);
 		glRotated(Math.toDegrees(this.body.getAngle()), 0, 0, 1);
 		
@@ -42,13 +45,13 @@ public class Ball extends DynamicBody {
 		glLineWidth(1);
 		
 		glBegin(GL_LINE_LOOP);
-		for (int i = 0; i <= Globals.CIRCLE_SEGMENTS; i++) {
+		for (int i = 0; i <= globals.circleSegments(); i++) {
 			double degInRad = Math.toRadians(i);
-			double angle = i * 2 * Math.PI / Globals.CIRCLE_SEGMENTS;
+			double angle = i * 2 * Math.PI / globals.circleSegments();
 			double x = (Math.cos(angle)
-					* shape.m_radius) * Globals.D;
+					* shape.m_radius) * globals.d();
 			double y = (Math.sin(angle)
-							* shape.m_radius) * Globals.D;
+							* shape.m_radius) * globals.d();
 			glVertex2f((float) x, (float) y);
 		}
 		glEnd();

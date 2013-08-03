@@ -15,8 +15,8 @@ import org.lwjgl.input.Mouse;
 
 public class ControllableBox extends Box implements InputHandler {
 
-	public ControllableBox(World world, float x, float y, float width, float height) {
-		super(world, x, y, width, height);
+	public ControllableBox(float x, float y, float width, float height) {
+		super(x, y, width, height);
 	}
 
 	@Override
