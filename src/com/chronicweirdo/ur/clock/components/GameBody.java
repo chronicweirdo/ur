@@ -1,27 +1,27 @@
-package com.chronicweirdo.ur.clock;
+package com.chronicweirdo.ur.clock.components;
+
+import javax.annotation.PostConstruct;
 
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
-import org.jbox2d.dynamics.World;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public abstract class GameBody implements GameComponent {
+import com.chronicweirdo.ur.clock.Globals;
+
+public abstract class GameBody implements Component {
 	
 	@Autowired
 	protected Globals globals;
+	
 	protected BodyDef definition;
-	protected World world;
 	protected Body body;
 
 	protected GameBody(BodyDef definition) {
-		//this.world = globals.world();
 		this.definition = definition;
-		this.world = world;
 	}
 	
-	public Globals getGlobals() {
-		return this.globals;
-	}
-
+	@PostConstruct
+	protected abstract void init();
+	
 	public abstract void render();
 }

@@ -1,4 +1,4 @@
-package com.chronicweirdo.ur.clock;
+package com.chronicweirdo.ur.clock.components;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -12,6 +12,8 @@ import org.jbox2d.dynamics.World;
 import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+
+import com.chronicweirdo.ur.clock.InputHandler;
 
 public class ControllableBox extends Box implements InputHandler {
 

@@ -1,19 +1,20 @@
-package com.chronicweirdo.ur.clock;
+package com.chronicweirdo.ur.clock.components;
 
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.World;
 
-public abstract class DynamicBody extends GameBody {
+public abstract class RigidBody extends GameBody {
 
 	protected static BodyDef definition(float x, float y) {
 		BodyDef definition = new BodyDef();
 		definition.position.set(x, y);
-		definition.type = BodyType.DYNAMIC;
+		definition.type = BodyType.STATIC;
 		return definition;
 	}
 	
-	protected DynamicBody(float x, float y) {
+	protected RigidBody(float x, float y) {
 		super(definition(x, y));
 	}
+
 }

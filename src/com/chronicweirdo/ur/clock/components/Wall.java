@@ -1,4 +1,4 @@
-package com.chronicweirdo.ur.clock;
+package com.chronicweirdo.ur.clock.components;
 
 import javax.annotation.PostConstruct;
 
@@ -15,12 +15,11 @@ public class Wall extends RigidBody {
 		
 		this.shape = new PolygonShape();
 		this.shape.setAsBox(width, height);
-
 	}
 
-	@PostConstruct
+	@Override
 	protected void init() {
-		this.body = this.world.createBody(definition);
+		this.body = globals.world().createBody(definition);
 
 		this.fixture = new FixtureDef();
 		fixture.density = 1;
@@ -32,8 +31,7 @@ public class Wall extends RigidBody {
 
 	@Override
 	public void render() {
-		// TODO Auto-generated method stub
-		
+		// walls are not drawn
 	}
 
 	

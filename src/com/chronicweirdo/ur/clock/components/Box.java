@@ -1,4 +1,4 @@
-package com.chronicweirdo.ur.clock;
+package com.chronicweirdo.ur.clock.components;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -20,10 +20,9 @@ public class Box extends DynamicBody {
 		this.shape.setAsBox(width, height);
 	}
 	
-	@PostConstruct
+	@Override
 	protected void init() {
-
-		this.body = world.createBody(this.definition);
+		this.body = globals.world().createBody(this.definition);
 
 		this.fixture = new FixtureDef();
 		this.fixture.density = 0.1f;

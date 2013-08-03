@@ -1,4 +1,4 @@
-package com.chronicweirdo.ur.clock;
+package com.chronicweirdo.ur.clock.components;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -6,7 +6,10 @@ import org.jbox2d.common.Vec2;
 import org.lwjgl.input.Mouse;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class Cannon implements GameComponent, InputHandler {
+import com.chronicweirdo.ur.clock.Globals;
+import com.chronicweirdo.ur.clock.InputHandler;
+
+public class Cannon implements Component, InputHandler {
 
 	@Autowired
 	private Globals globals;

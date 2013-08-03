@@ -1,4 +1,6 @@
-package com.chronicweirdo.ur.clock;
+package com.chronicweirdo.ur.clock.components;
+
+import java.util.UUID;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,8 +8,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
+import com.chronicweirdo.ur.clock.Globals;
+
 @Component
-public class GameComponentFactory implements ApplicationContextAware {
+public class ComponentFactory implements ApplicationContextAware {
 
 	@Autowired
 	private Globals globals;
@@ -38,6 +42,7 @@ public class GameComponentFactory implements ApplicationContextAware {
 	
 	private Object autowire(Object bean) {
 		this.context.getAutowireCapableBeanFactory().autowireBean(bean);
+		this.context.getAutowireCapableBeanFactory().initializeBean(bean, UUID.randomUUID().toString());
 		return bean;
 	}
 	

@@ -15,6 +15,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
 
+import com.chronicweirdo.ur.clock.components.Ball;
+import com.chronicweirdo.ur.clock.components.Component;
+import com.chronicweirdo.ur.clock.components.ComponentFactory;
+
 @Service
 public class Main {
 
@@ -22,16 +26,16 @@ public class Main {
 	private Globals globals;
 
 	@Autowired
-	private GameComponentFactory factory;
+	private ComponentFactory factory;
 
 	private static final String WINDOW_TITLE = "Clock Glock";
 	private static final int[] WINDOW_DIMENSIONS = { 640, 480 };
 
-	private Set<GameComponent> components;
+	private Set<Component> components;
 	private Set<InputHandler> handlers;
 
 	private Main() {
-		this.components = new HashSet<GameComponent>();
+		this.components = new HashSet<Component>();
 		this.handlers = new HashSet<InputHandler>();
 	}
 
@@ -72,7 +76,8 @@ public class Main {
 		// add a box
 		// this.addBody(new ControllableBox(this.world, 3f, 3f, 0.2f, 2f));
 		// this.addBody(new Box(this.world, 6f, 3f, 1f, 2f));
-		// this.addBody(new Ball(this.world, 5f, 15f, 1f));
+		this.addBody(factory.ball(5f, 15f, 1f));
+		this.addBody(factory.ball(8f, 15f, 1f));
 		this.addBody(factory.cannon(WINDOW_DIMENSIONS[0] / 4 / globals.d(),
 				WINDOW_DIMENSIONS[1] / 4 / globals.d()));
 	}
@@ -82,7 +87,7 @@ public class Main {
 		System.exit(asCrash ? 1 : 0);
 	}
 
-	private void addBody(GameComponent body) {
+	private void addBody(Component body) {
 		this.components.add(body);
 		if (body instanceof InputHandler) {
 			System.out.println("adding input handler");
@@ -111,7 +116,7 @@ public class Main {
 
 	private void render() {
 		glClear(GL_COLOR_BUFFER_BIT);
-		for (GameComponent component : this.components) {
+		for (Component component : this.components) {
 			component.render();
 		}
 		renderHUD();
