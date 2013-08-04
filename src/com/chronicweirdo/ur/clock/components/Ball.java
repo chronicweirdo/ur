@@ -9,7 +9,7 @@ import org.jbox2d.dynamics.FixtureDef;
 
 import com.chronicweirdo.ur.clock.Hour;
 
-public class Ball extends DynamicBody {
+public class Ball extends DynamicBody implements Destroyable {
 
 	protected CircleShape shape;
 	protected Fixture fixture;
@@ -44,10 +44,10 @@ public class Ball extends DynamicBody {
 			glTranslatef(bodyPosition.x, bodyPosition.y, 0);
 			glRotated(Math.toDegrees(this.body.getAngle()), 0, 0, 1);
 
-			glColor3f(0, 1, 0);
+			glColor3f(0, 0, 1);
 			glLineWidth(1);
 
-			glBegin(GL_LINE_LOOP);
+			glBegin(GL_POLYGON);
 			for (int i = 0; i <= globals.circleSegments(); i++) {
 				double degInRad = Math.toRadians(i);
 				double angle = i * 2 * Math.PI / globals.circleSegments();

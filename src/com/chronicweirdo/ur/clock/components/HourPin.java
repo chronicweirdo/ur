@@ -59,7 +59,7 @@ public class HourPin extends RigidBody {
 			}
 			glLineWidth(2);
 
-			glBegin(GL_LINE_LOOP);
+			glBegin(GL_POLYGON);
 			for (int i = 0; i <= globals.circleSegments(); i++) {
 				double degInRad = Math.toRadians(i);
 				double angle = i * 2 * Math.PI / globals.circleSegments();

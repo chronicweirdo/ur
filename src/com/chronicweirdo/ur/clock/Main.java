@@ -17,6 +17,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
 
+import sun.security.krb5.internal.crypto.Des;
+
 import com.chronicweirdo.ur.clock.Hour.HourSet;
 import com.chronicweirdo.ur.clock.components.ComponentFactory;
 import com.chronicweirdo.ur.clock.components.GameComponent;
@@ -156,8 +158,16 @@ public class Main {
 				CreateBoxMessage m = (CreateBoxMessage) gm;
 				factory.box(m.x, m.y, m.w, m.h);
 			}
+			if (gm instanceof CreateBombMessage) {
+				CreateBombMessage m = (CreateBombMessage) gm;
+				factory.bomb(m.x, m.y, m.r, 3.5f, 5000);
+			}
 			if (gm instanceof DestroyBoxMessage) {
 				factory.destroyBox();
+			}
+			if (gm instanceof DestroyComponentMessage) {
+				DestroyComponentMessage m = (DestroyComponentMessage) gm;
+				factory.destroyComponent(m.getComponent());
 			}
 		}
 		messages = new ArrayList<GameMessage>();

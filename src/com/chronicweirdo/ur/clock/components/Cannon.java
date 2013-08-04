@@ -3,6 +3,7 @@ package com.chronicweirdo.ur.clock.components;
 import static org.lwjgl.opengl.GL11.*;
 
 import org.jbox2d.common.Vec2;
+import org.jbox2d.dynamics.Body;
 import org.lwjgl.input.Mouse;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -105,6 +106,11 @@ public class Cannon implements GameComponent, InputHandler {
 		nv = nv.mul(speed);
 		ball.getBody().applyForce(nv, ball.getBody().getWorldCenter());
 		lastShoot = System.currentTimeMillis();
+	}
+
+	@Override
+	public Body getBody() {
+		return null;
 	}
 
 }

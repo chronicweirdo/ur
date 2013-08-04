@@ -8,7 +8,7 @@ import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.FixtureDef;
 
-public class Box extends DynamicBody {
+public class Box extends DynamicBody implements Destroyable {
 
 	protected PolygonShape shape;
 	protected FixtureDef fixture;

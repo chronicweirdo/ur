@@ -17,6 +17,7 @@ public class MyContactListener implements ContactListener {
 
 	@Override
 	public void beginContact(Contact contact) {
+		
 		Vec2 position = contact.getFixtureA().getBody().getPosition();
 		Hour uda = null, udb = null;
 		if (contact.getFixtureA().getUserData() != null) {
@@ -32,7 +33,8 @@ public class MyContactListener implements ContactListener {
 		if (uda != null && udb != null) {
 			if ((uda.isOnPin() && !udb.isOnPin())) {
 				if (uda.getHour().equals(udb.getHour())) {
-					main.addMessage(new DestroyBoxMessage());
+					main.addMessage(new CreateBombMessage(position.x,
+							position.y, .5f));
 				} else {
 					main.addMessage(new CreateBoxMessage(position.x,
 							position.y, .5f, 1f));

@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import org.jbox2d.common.Vec2;
+import org.jbox2d.dynamics.Body;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -12,7 +14,6 @@ import org.springframework.stereotype.Component;
 
 import com.chronicweirdo.ur.clock.Globals;
 import com.chronicweirdo.ur.clock.Hour;
-import com.chronicweirdo.ur.clock.Hour.HourSet;
 
 @Component
 public class ComponentFactory implements ApplicationContextAware {
@@ -81,10 +82,35 @@ public class ComponentFactory implements ApplicationContextAware {
 		return bean;
 	}
 	
+	public Bomb bomb(float x, float y, float radius, float blastRadius,
+			long blastTimeout) {
+		return (Bomb) autowire(new Bomb(x, y, radius, blastRadius, blastTimeout));
+	}
+	
 	public Wall wall(float x, float y, float width, float height) {
 		return (Wall) autowire(new Wall(x, y, width, height));
 	}
 
+	/*public void destroyByBomb(float x, float y, float r) {
+		for (GameComponent c: this.components) {
+			if (c instanceof Destroyable) {
+				Body body = c.getBody();
+				Vec2 p = body.getPosition();
+				double d = Math.sqrt(Math.pow(Math.abs(p.x-x), 2) + Math.pow(Math.abs(p.y-y),2));
+				System.out.println(d + " " + r);
+				if (d <= r) {
+					System.out.println(c.getBody());
+					globals.world().destroyBody(c.getBody());
+					components.remove(c);
+				}
+			}
+		}
+	}*/
+	public void destroyComponent(GameComponent component) {
+		System.out.println(component.getBody());
+		globals.world().destroyBody(component.getBody());
+		components.remove(component);
+	}
 	public void destroyBox() {
 		for (GameComponent c: this.components) {
 			if (c instanceof Box) {
