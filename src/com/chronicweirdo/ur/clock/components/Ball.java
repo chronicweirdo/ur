@@ -7,15 +7,15 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
 
-import com.chronicweirdo.ur.clock.components.Hour.HourSet;
+import com.chronicweirdo.ur.clock.Hour;
 
 public class Ball extends DynamicBody {
 
 	protected CircleShape shape;
 	protected Fixture fixture;
-	protected HourSet hour;
+	protected Hour hour;
 
-	protected Ball(HourSet hour, float x, float y, float radius) {
+	protected Ball(Hour hour, float x, float y, float radius) {
 		super(x, y);
 
 		this.hour = hour;

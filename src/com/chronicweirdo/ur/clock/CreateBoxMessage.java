@@ -1,6 +1,6 @@
 package com.chronicweirdo.ur.clock;
 
-public class CreateBoxMessage {
+public class CreateBoxMessage implements GameMessage {
 
 	public float x, y, w, h;
 

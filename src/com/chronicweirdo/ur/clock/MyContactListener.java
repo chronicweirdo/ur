@@ -6,12 +6,10 @@ import org.jbox2d.collision.Manifold;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.contacts.Contact;
 
-import com.chronicweirdo.ur.clock.components.Hour.HourSet;
-
 public class MyContactListener implements ContactListener {
 
 	private Main main;
-	
+
 	public MyContactListener(Main main) {
 		super();
 		this.main = main;
@@ -19,22 +17,26 @@ public class MyContactListener implements ContactListener {
 
 	@Override
 	public void beginContact(Contact contact) {
-		System.out.println("contact detected");
 		Vec2 position = contact.getFixtureA().getBody().getPosition();
-		HourSet uda = null, udb = null;
+		Hour uda = null, udb = null;
 		if (contact.getFixtureA().getUserData() != null) {
-			if (contact.getFixtureA().getUserData() instanceof HourSet) {
-				uda = (HourSet) contact.getFixtureA().getUserData();
+			if (contact.getFixtureA().getUserData() instanceof Hour) {
+				uda = (Hour) contact.getFixtureA().getUserData();
 			}
 		}
 		if (contact.getFixtureB().getUserData() != null) {
-			if (contact.getFixtureB().getUserData() instanceof HourSet) {
-				udb = (HourSet) contact.getFixtureB().getUserData();
+			if (contact.getFixtureB().getUserData() instanceof Hour) {
+				udb = (Hour) contact.getFixtureB().getUserData();
 			}
 		}
 		if (uda != null && udb != null) {
-			if (uda.equals(udb)) {
-				main.addMessage(new CreateBoxMessage(position.x, position.y, .5f, 1f));
+			if ((uda.isOnPin() && !udb.isOnPin())) {
+				if (uda.getHour().equals(udb.getHour())) {
+					main.addMessage(new DestroyBoxMessage());
+				} else {
+					main.addMessage(new CreateBoxMessage(position.x,
+							position.y, .5f, 1f));
+				}
 			}
 		}
 	}

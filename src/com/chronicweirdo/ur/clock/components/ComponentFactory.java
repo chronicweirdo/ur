@@ -4,8 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -13,8 +11,8 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 import com.chronicweirdo.ur.clock.Globals;
-import com.chronicweirdo.ur.clock.MyContactListener;
-import com.chronicweirdo.ur.clock.components.Hour.HourSet;
+import com.chronicweirdo.ur.clock.Hour;
+import com.chronicweirdo.ur.clock.Hour.HourSet;
 
 @Component
 public class ComponentFactory implements ApplicationContextAware {
@@ -53,7 +51,7 @@ public class ComponentFactory implements ApplicationContextAware {
 		this.context = context;
 	}
 	
-	public Ball ball(HourSet hour, float x, float y, float radius) {
+	public Ball ball(Hour hour, float x, float y, float radius) {
 		return (Ball) autowire(new Ball(hour, x, y, radius));
 	}
 	
@@ -65,8 +63,8 @@ public class ComponentFactory implements ApplicationContextAware {
 		return (Cannon) autowire(new Cannon(x, y));
 	}
 	
-	public Hour hour(HourSet hour, float x, float y) {
-		return (Hour) autowire(new Hour(hour, x, y));
+	public HourPin hourPin(Hour hour, float x, float y) {
+		return (HourPin) autowire(new HourPin(hour, x, y));
 	}
 	public Bizkit bizkit(float x, float y) {
 		return (Bizkit) autowire(new Bizkit(x, y));
@@ -85,5 +83,15 @@ public class ComponentFactory implements ApplicationContextAware {
 	
 	public Wall wall(float x, float y, float width, float height) {
 		return (Wall) autowire(new Wall(x, y, width, height));
+	}
+
+	public void destroyBox() {
+		for (GameComponent c: this.components) {
+			if (c instanceof Box) {
+				globals.world().destroyBody(((Box) c).getBody());
+				components.remove(c);
+				return;
+			}
+		}
 	}
 }

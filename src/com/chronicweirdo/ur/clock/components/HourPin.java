@@ -8,23 +8,21 @@ import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
+import org.springframework.beans.factory.annotation.Autowired;
 
-public class Hour extends RigidBody {
+import com.chronicweirdo.ur.clock.Hour;
+import com.chronicweirdo.ur.clock.Main;
+
+public class HourPin extends RigidBody {
+
+	@Autowired
+	protected Main main;
 	
-	public static enum HourSet {
-		ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, ELEVEN, 
-		TWELVE
-	}
-
 	protected CircleShape shape;
 	protected Fixture fixture;
-	protected HourSet hour;
+	protected Hour hour;
 
-	public void setHour(HourSet hour) {
-		this.hour = hour;
-	}
-
-	protected Hour(HourSet hour, float x, float y) {
+	protected HourPin(Hour hour, float x, float y) {
 		super(x, y);
 		this.hour = hour;
 	}
@@ -54,8 +52,12 @@ public class Hour extends RigidBody {
 			glTranslatef(bodyPosition.x, bodyPosition.y, 0);
 			glRotated(Math.toDegrees(this.body.getAngle()), 0, 0, 1);
 
-			glColor3f(0, 1, 0);
-			glLineWidth(1);
+			if (main.getCurrentHour().equals(hour.getHour())) {
+				glColor3f(0, 1, 0);
+			} else {
+				glColor3f(1, 1, 0);
+			}
+			glLineWidth(2);
 
 			glBegin(GL_LINE_LOOP);
 			for (int i = 0; i <= globals.circleSegments(); i++) {

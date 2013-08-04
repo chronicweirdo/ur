@@ -3,11 +3,11 @@ package com.chronicweirdo.ur.clock.components;
 import static org.lwjgl.opengl.GL11.*;
 
 import org.jbox2d.common.Vec2;
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.chronicweirdo.ur.clock.Globals;
+import com.chronicweirdo.ur.clock.Hour;
 import com.chronicweirdo.ur.clock.Main;
 
 public class Cannon implements GameComponent, InputHandler {
@@ -23,7 +23,7 @@ public class Cannon implements GameComponent, InputHandler {
 
 	private float x;
 	private float y;
-	private float speed = 1;
+	private float speed = 5;
 	private float size = .5f;
 	private long lastShoot = 0;
 	private long timeout = 200;
@@ -40,7 +40,7 @@ public class Cannon implements GameComponent, InputHandler {
 		Vec2 position = new Vec2(this.x, this.y).mul(globals.d());
 		glTranslatef(position.x, position.y, 0);
 
-		Vec2 nv = getNormalizedDirectionVector().mul(speed/2);
+		Vec2 nv = getNormalizedDirectionVector().mul(speed / 2);
 		// draw cannon
 		glLineWidth(this.size * 10);
 		glBegin(GL_LINES);
@@ -78,10 +78,10 @@ public class Cannon implements GameComponent, InputHandler {
 					speed += 0.1;
 				}
 			} else {
-				if (speed > 1) {
+				if (speed > 5) {
 					// fire projectile
 					fire();
-					speed = 1;
+					speed = 5;
 				}
 			}
 			if (Mouse.isButtonDown(1)) {
@@ -99,7 +99,8 @@ public class Cannon implements GameComponent, InputHandler {
 	private void fire() {
 		// create a ball and send it in the direction of the current
 		// vector
-		Ball ball = factory.ball(main.getCurrentHour(), this.x, this.y, size);
+		Ball ball = factory.ball(new Hour(main.getCurrentHour(), false),
+				this.x, this.y, size);
 		Vec2 nv = getNormalizedDirectionVector();
 		nv = nv.mul(speed);
 		ball.getBody().applyForce(nv, ball.getBody().getWorldCenter());
