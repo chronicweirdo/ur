@@ -5,19 +5,16 @@ import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.collision.Manifold;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.contacts.Contact;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-import com.chronicweirdo.ur.clock.components.ComponentFactory;
 import com.chronicweirdo.ur.clock.components.Hour.HourSet;
 
 public class MyContactListener implements ContactListener {
 
-	private ComponentFactory factory;
+	private Main main;
 	
-	public MyContactListener(ComponentFactory factory) {
+	public MyContactListener(Main main) {
 		super();
-		this.factory = factory;
+		this.main = main;
 	}
 
 	@Override
@@ -37,7 +34,7 @@ public class MyContactListener implements ContactListener {
 		}
 		if (uda != null && udb != null) {
 			if (uda.equals(udb)) {
-				factory.box(position.x, position.y, .5f, 1f);
+				main.addMessage(new CreateBoxMessage(position.x, position.y, .5f, 1f));
 			}
 		}
 	}

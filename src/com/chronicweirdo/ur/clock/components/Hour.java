@@ -41,7 +41,6 @@ public class Hour extends RigidBody {
 		fixtureDef.density = 1f;
 		fixtureDef.restitution = .3f;
 		fixtureDef.shape = this.shape;
-		fixtureDef.isSensor = true;
 		Fixture sensor = this.body.createFixture(fixtureDef);
 		sensor.setUserData(hour);
 	}

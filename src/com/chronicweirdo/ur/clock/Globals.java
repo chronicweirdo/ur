@@ -12,7 +12,7 @@ import com.chronicweirdo.ur.clock.components.ComponentFactory;
 public class Globals {
 
 	private World world;
-	private int D = 3;
+	private int D = 10;
 	private float G = -9.8f;
 	private int circleSegments = 100;
 	

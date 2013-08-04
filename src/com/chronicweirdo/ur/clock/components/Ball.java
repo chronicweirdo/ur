@@ -31,7 +31,6 @@ public class Ball extends DynamicBody {
 		fixtureDef.density = 0.1f;
 		fixtureDef.restitution = .95f;
 		fixtureDef.shape = this.shape;
-		fixtureDef.isSensor = true;
 		fixture = this.body.createFixture(fixtureDef);
 		fixture.setUserData(hour);
 	}

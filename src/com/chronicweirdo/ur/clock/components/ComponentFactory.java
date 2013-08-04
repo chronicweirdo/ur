@@ -31,11 +31,6 @@ public class ComponentFactory implements ApplicationContextAware {
 		this.components = new HashSet<GameComponent>();
 		this.handlers = new HashSet<InputHandler>();
 	}
-	
-	@PostConstruct
-	public void init() {
-		globals.setContactListener(new MyContactListener(this));
-	}
 
 	public Set<GameComponent> components() {
 		return this.components;

@@ -2,6 +2,9 @@ package com.chronicweirdo.ur.clock;
 
 import static org.lwjgl.opengl.GL11.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 
 import org.lwjgl.LWJGLException;
@@ -29,9 +32,13 @@ public class Main {
 	private static final String WINDOW_TITLE = "Clock Glock";
 	private static final int[] WINDOW_DIMENSIONS = { 640, 480 };
 	
+	private List<CreateBoxMessage> messages = new ArrayList<CreateBoxMessage>();
+	
 	private HourSet currentHour;
 	
-	
+	public void addMessage(CreateBoxMessage m) {
+		this.messages.add(m);
+	}
 
 	public HourSet getCurrentHour() {
 		return currentHour;
@@ -49,6 +56,7 @@ public class Main {
 		setUpDisplay();
 		setUpObjects();
 		setUpMatrices();
+		globals.setContactListener(new MyContactListener(this));
 	}
 
 	private void setUpDisplay() {
@@ -77,15 +85,13 @@ public class Main {
 		factory.wall(320f / globals.d(), 0f, 0f, 1000f); // right wall
 		factory.wall(0, 240f / globals.d(), 1000f, 0f); // ceiling
 
-		// add a box
-		// this.addBody(new ControllableBox(this.world, 3f, 3f, 0.2f, 2f));
-		// this.addBody(new Box(this.world, 6f, 3f, 1f, 2f));
-		//this.addBody(factory.ball(5f, 15f, 1f));
-		//this.addBody(factory.ball(8f, 15f, 1f));
 		factory.cannon(WINDOW_DIMENSIONS[0] / 4 / globals.d(),
 				WINDOW_DIMENSIONS[1] / 4 / globals.d());
-		//factory.hour(currentHour, 10, 10);
-		//factory.bizkit(1, 1);
+		factory.hour(HourSet.ONE, 10, 10);
+		setCurrentHour(HourSet.ONE);
+		factory.box(10, 20, 1, 2);
+		factory.box(20, 20, 1, 2);
+		
 	}
 
 	private void cleanUp(boolean asCrash) {
@@ -125,6 +131,12 @@ public class Main {
 	}
 
 	private void logic() {
+		// add new bodies
+		for (CreateBoxMessage m: messages) {
+			factory.box(m.x, m.y, m.w, m.h);
+		}
+		messages = new ArrayList<CreateBoxMessage>();
+		//
 		globals.world().step(1 / 30f, 8, 3);
 	}
 
