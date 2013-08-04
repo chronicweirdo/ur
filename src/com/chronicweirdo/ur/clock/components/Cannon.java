@@ -99,7 +99,7 @@ public class Cannon implements GameComponent, InputHandler {
 	private void fire() {
 		// create a ball and send it in the direction of the current
 		// vector
-		Ball ball = factory.ball(this.x, this.y, size);
+		Ball ball = factory.ball(main.getCurrentHour(), this.x, this.y, size);
 		Vec2 nv = getNormalizedDirectionVector();
 		nv = nv.mul(speed);
 		ball.getBody().applyForce(nv, ball.getBody().getWorldCenter());

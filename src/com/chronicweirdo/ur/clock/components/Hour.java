@@ -2,38 +2,48 @@ package com.chronicweirdo.ur.clock.components;
 
 import static org.lwjgl.opengl.GL11.*;
 
+import javax.annotation.PostConstruct;
+
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
 
-import com.chronicweirdo.ur.clock.components.Hour.HourSet;
-
-public class Ball extends DynamicBody {
+public class Hour extends RigidBody {
+	
+	public static enum HourSet {
+		ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, ELEVEN, 
+		TWELVE
+	}
 
 	protected CircleShape shape;
 	protected Fixture fixture;
 	protected HourSet hour;
 
-	protected Ball(HourSet hour, float x, float y, float radius) {
-		super(x, y);
-
+	public void setHour(HourSet hour) {
 		this.hour = hour;
-		this.shape = new CircleShape();
-		this.shape.m_radius = radius;
+	}
+
+	protected Hour(HourSet hour, float x, float y) {
+		super(x, y);
+		this.hour = hour;
 	}
 
 	@Override
+	@PostConstruct
 	protected void init() {
+		this.shape = new CircleShape();
+		this.shape.m_radius = .5f;
+		
 		this.body = globals.world().createBody(this.definition);
 
 		FixtureDef fixtureDef = new FixtureDef();
-		fixtureDef.density = 0.1f;
-		fixtureDef.restitution = .95f;
+		fixtureDef.density = 1f;
+		fixtureDef.restitution = .3f;
 		fixtureDef.shape = this.shape;
 		fixtureDef.isSensor = true;
-		fixture = this.body.createFixture(fixtureDef);
-		fixture.setUserData(hour);
+		Fixture sensor = this.body.createFixture(fixtureDef);
+		sensor.setUserData(hour);
 	}
 
 	@Override

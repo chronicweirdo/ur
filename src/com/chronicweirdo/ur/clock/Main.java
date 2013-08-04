@@ -2,9 +2,6 @@ package com.chronicweirdo.ur.clock;
 
 import static org.lwjgl.opengl.GL11.*;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.annotation.PostConstruct;
 
 import org.lwjgl.LWJGLException;
@@ -15,9 +12,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
 
-import com.chronicweirdo.ur.clock.components.Ball;
-import com.chronicweirdo.ur.clock.components.GameComponent;
 import com.chronicweirdo.ur.clock.components.ComponentFactory;
+import com.chronicweirdo.ur.clock.components.GameComponent;
+import com.chronicweirdo.ur.clock.components.Hour.HourSet;
 import com.chronicweirdo.ur.clock.components.InputHandler;
 
 @Service
@@ -31,6 +28,18 @@ public class Main {
 
 	private static final String WINDOW_TITLE = "Clock Glock";
 	private static final int[] WINDOW_DIMENSIONS = { 640, 480 };
+	
+	private HourSet currentHour;
+	
+	
+
+	public HourSet getCurrentHour() {
+		return currentHour;
+	}
+
+	public void setCurrentHour(HourSet currentHour) {
+		this.currentHour = currentHour;
+	}
 
 	private Main() {
 	}
@@ -75,6 +84,8 @@ public class Main {
 		//this.addBody(factory.ball(8f, 15f, 1f));
 		factory.cannon(WINDOW_DIMENSIONS[0] / 4 / globals.d(),
 				WINDOW_DIMENSIONS[1] / 4 / globals.d());
+		//factory.hour(currentHour, 10, 10);
+		//factory.bizkit(1, 1);
 	}
 
 	private void cleanUp(boolean asCrash) {
